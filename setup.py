@@ -39,6 +39,8 @@ setup(
             # 'i2c_cal_mag = rtf_sensors.imu_cal_mag_node:main',
             'lsm6sox_node = rtf_sensors.nodes.sensor_nodes:rtf_lsm6sox_node',
             'bmp390_node = rtf_sensors.nodes.sensor_nodes:rtf_bmp390_node',
+            'dps310_node = rtf_sensors.nodes.sensor_nodes:rtf_dps310_node',
+            'lis3mdl_node = rtf_sensors.nodes.sensor_nodes:rtf_lis3mdl_node',
         ],
     },
 )
