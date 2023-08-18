@@ -36,8 +36,8 @@ def run(sensorClass, args=None):
 def rtf_bmp390_node(args=None):
     run(rtf_bmp390, args)
 
-def rtf_dsp310_node(args=None):
-    run(rtf_dsp310, args)
+def rtf_dps310_node(args=None):
+    run(rtf_dps310, args)
 
 # Magnetic ------------------------------
 def rtf_lis3mdl_node(args=None):
