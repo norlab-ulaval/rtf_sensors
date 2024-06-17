@@ -24,6 +24,7 @@ setup(
         'adafruit_circuitpython_lps2x',
         'adafruit_circuitpython_dps310',
         'adafruit-circuitpython-mlx90640',
+        'adafruit-circuitpython-tca9548a',
         #'sensor_msgs'
     ],
     zip_safe=True,
@@ -44,6 +45,7 @@ setup(
             'bmp390_node = rtf_sensors.nodes.sensor_nodes:rtf_bmp390_node',
             'dps310_node = rtf_sensors.nodes.sensor_nodes:rtf_dps310_node',
             'lis3mdl_node = rtf_sensors.nodes.sensor_nodes:rtf_lis3mdl_node',
+            'multi_pt_node = rtf_sensors.nodes.sensor_nodes:rtf_multi_pt_node',
         ],
     },
 )

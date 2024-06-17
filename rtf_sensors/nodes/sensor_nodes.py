@@ -12,6 +12,7 @@ from rclpy.executors import SingleThreadedExecutor
 from ..sensors.acceleration_gyro    import rtf_lsm6sox
 from ..sensors.magnetic             import rtf_lis3mdl
 from ..sensors.pressure_temperature import rtf_dps310
+from ..sensors.multi_pressure_temperature import rtf_multi_pt
 from ..sensors.pressure_temperature import rtf_bmp390
 
 
@@ -38,6 +39,9 @@ def rtf_bmp390_node(args=None):
 
 def rtf_dps310_node(args=None):
     run(rtf_dps310, args)
+
+def rtf_multi_pt_node(args=None):
+    run(rtf_multi_pt, args)
 
 # Magnetic ------------------------------
 def rtf_lis3mdl_node(args=None):

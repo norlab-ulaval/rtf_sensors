@@ -7,9 +7,11 @@
 import rclpy
 from rclpy.node import Node
 from rtf_sensors_msgs.msg import CustomPressureTemperature
+from adafruit_extended_bus import ExtendedI2C as I2C
 #from geometry_msgs.msg import PointStamped
 import board
 import busio
+import adafruit_tca9548a
 
 try:
     import adafruit_dps310
@@ -30,10 +32,22 @@ class rtf_PT(Node):
     def __init__(self, name, i2c=None):
         super().__init__(name)
 
+        self.i2c_bus = self.declare_parameter('i2c_bus', 1).value
+        self.tca_port = self.declare_parameter('tca_port', 0).value
+
+        if self.i2c_bus == 1:
+            i2c = I2C(1)
+        elif self.i2c_bus == 7:
+            i2c = I2C(7)
+        else:
+            return
+
         if i2c is None:
-            self.i2c = busio.I2C(board.SCL, board.SDA)
+            self.i2c = busio.I2C(scl=custom_scl, sda=custom_sda)
         else:
             self.i2c = i2c
+        
+        self.tca = adafruit_tca9548a.TCA9548A(i2c)
 
         Hertz = 100
         rate = 1.0/Hertz
@@ -42,10 +56,9 @@ class rtf_PT(Node):
         self.timer = self.create_timer(rate, self.callback)
 
         self.pub_pressure_temp = self.create_publisher(CustomPressureTemperature, 'data', 10)
-        #self.pub_altitude = self.create_publisher(PointStamped, 'altitude', 10)
 
         self.frame_id = self.declare_parameter('frame_id', "dps310").value
-        self.i2c_address = self.declare_parameter('i2c_address', "0x77").value
+        self.i2c_address = self.declare_parameter('i2c_address', 0x77).value
         
         self.pressure_temp_msg = CustomPressureTemperature()
         self.pressure_temp_msg.header.frame_id = self.frame_id
@@ -88,14 +101,6 @@ class rtf_PT(Node):
         
         self.pub_pressure_temp.publish(self.pressure_temp_msg)
 
-        #msg = PointStamped()
-        #msg.header.stamp = self.get_clock().now().to_msg()
-        #msg.header.frame_id = self.frame_id
-        #msg.point.x = 0.0
-        #msg.point.y = 0.0
-        #msg.point.z = 44330. * (1. - (p/p0)**(1./5.255) )
-        #self.pub_altitude.publish(msg)
-
 
 class rtf_dps310(rtf_PT):
     def __init__(self, i2c=None):
@@ -103,7 +108,7 @@ class rtf_dps310(rtf_PT):
 
         #self.sensor = adafruit_dps310.DPS310(self.i2c)
         #self.sensor = adafruit_dps310.DPS310(self.i2c, 0x76)
-        self.sensor = adafruit_dps310.DPS310(self.i2c, self.i2c_address)
+        self.sensor = adafruit_dps310.DPS310(self.tca[self.tca_port], self.i2c_address)
 
 
 class rtf_bmp390(rtf_PT):
