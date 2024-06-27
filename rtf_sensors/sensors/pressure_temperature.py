@@ -35,10 +35,10 @@ class rtf_PT(Node):
         else:
             self.i2c = i2c
 
-        # rate = 1.0
+        rate = 100.0
         self.sensor = None
 
-        self.timer = self.create_timer(1.0, self.callback)
+        self.timer = self.create_timer(1.0/rate, self.callback)
 
         self.pub_temp = self.create_publisher(Temperature, 'temperature', 10)
         self.pub_pressure = self.create_publisher(FluidPressure, 'pressure', 10)
