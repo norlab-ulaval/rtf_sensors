@@ -35,16 +35,18 @@ class rtf_PT(Node):
         else:
             self.i2c = i2c
 
-        # rate = 1.0
+        Hertz = 100
+        rate = 1.0/Hertz
         self.sensor = None
 
-        self.timer = self.create_timer(1.0, self.callback)
+        self.timer = self.create_timer(rate, self.callback)
 
         self.pub_temp = self.create_publisher(Temperature, 'temperature', 10)
         self.pub_pressure = self.create_publisher(FluidPressure, 'pressure', 10)
         #self.pub_altitude = self.create_publisher(PointStamped, 'altitude', 10)
 
         self.frame_id = self.declare_parameter('frame_id', "dps310").value
+        self.i2c_address = self.declare_parameter('i2c_address', "0x77").value
 
         self.temp_msg = Temperature()
         self.temp_msg.header.frame_id = self.frame_id
@@ -80,7 +82,9 @@ class rtf_dps310(rtf_PT):
     def __init__(self, i2c=None):
         super().__init__('rtf_dps310', i2c)
 
-        self.sensor = adafruit_dps310.DPS310(self.i2c)
+        #self.sensor = adafruit_dps310.DPS310(self.i2c)
+        #self.sensor = adafruit_dps310.DPS310(self.i2c, 0x76)
+        self.sensor = adafruit_dps310.DPS310(self.i2c, self.i2c_address)
 
 
 class rtf_bmp390(rtf_PT):
