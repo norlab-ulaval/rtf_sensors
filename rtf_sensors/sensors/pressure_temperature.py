@@ -65,7 +65,7 @@ class rtf_PT(Node):
         if raw_temp & (1 << (24 - 1)):
             raw_temp -= 1 << 24
         self.temp_msg.raw_temperature = float(raw_temp)
-        self.scale_temperature = float(self.sensor._temp_scale)
+        self.temp_msg.scale_temperature = float(self.sensor._temp_scale)
         t = self.sensor.temperature
         self.temp_msg.temperature = t # C
         self.pub_temp.publish(self.temp_msg)
