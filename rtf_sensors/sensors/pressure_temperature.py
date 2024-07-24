@@ -104,9 +104,9 @@ class rtf_dps310(rtf_PT):
     def __init__(self, i2c=None):
         super().__init__('rtf_dps310', i2c)
 
-        #self.sensor = adafruit_dps310.DPS310(self.i2c)
-        #self.sensor = adafruit_dps310.DPS310(self.i2c, 0x76)
-        self.sensor = adafruit_dps310.DPS310(self.i2c, self.i2c_address)
+        self.sensor = adafruit_dps310.DPS310(self.i2c)
+        # self.sensor = adafruit_dps310.DPS310(self.i2c, 0x76)
+        # self.sensor = adafruit_dps310.DPS310(self.i2c, self.i2c_address)
 
 
 class rtf_bmp390(rtf_PT):
