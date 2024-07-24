@@ -1,16 +1,12 @@
 <launch>
         <node pkg="rtf_sensors" exec="dps310_node" name="altimeter_1" output="screen">
-                <remap from="altitude" to="dps310/altitude"/>
-                <remap from="temperature" to="dps310_1/temperature"/>
-		<remap from="pressure" to="dps310_1/pressure"/>
+                <remap from="data" to="dps310_1/data"/>
 		<param name="frame_id" value="dps310_1" />
 		<param name="i2c_address" value="0x77" />
         </node>
 
         <node pkg="rtf_sensors" exec="dps310_node" name="altimeter_2" output="screen">
-                <remap from="altitude" to="dps310/altitude"/>
-                <remap from="temperature" to="dps310_2/temperature"/>
-                <remap from="pressure" to="dps310_2/pressure"/>
+                <remap from="data" to="dps310_2/data"/>
 		<param name="frame_id" value="dps310_2" />
 		<param name="i2c_address" value="0x76" />
         </node>
