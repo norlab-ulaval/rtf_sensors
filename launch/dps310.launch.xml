@@ -1,6 +1,6 @@
 <launch>
         <node pkg="rtf_sensors" exec="dps310_node" name="altimeter_sphere" output="screen">
-		<remap from="data" to="dps310_sphere/data"/>
+		<remap from="data" to="dps310_warthog/data"/>
 		<param name="frame_id" value="dps310" />
 		<param name="i2c_address" value="0x77" />
         </node>
