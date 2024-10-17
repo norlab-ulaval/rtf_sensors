@@ -45,7 +45,7 @@ class rtf_PT(Node):
         #self.pub_altitude = self.create_publisher(PointStamped, 'altitude', 10)
 
         self.frame_id = self.declare_parameter('frame_id', "dps310").value
-        self.i2c_address = self.declare_parameter('i2c_address', "0x77").value
+        self.i2c_address = self.declare_parameter('i2c_address', 0x77).value
         
         self.pressure_temp_msg = CustomPressureTemperature()
         self.pressure_temp_msg.header.frame_id = self.frame_id
