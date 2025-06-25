@@ -44,6 +44,7 @@ setup(
             'bmp390_node = rtf_sensors.nodes.sensor_nodes:rtf_bmp390_node',
             'dps310_node = rtf_sensors.nodes.sensor_nodes:rtf_dps310_node',
             'lis3mdl_node = rtf_sensors.nodes.sensor_nodes:rtf_lis3mdl_node',
+            'plane_orientation_node = rtf_sensors.roll_pitch_computation:main',
         ],
     },
 )

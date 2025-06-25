@@ -7,6 +7,7 @@
 import rclpy
 from rclpy.node import Node
 from rtf_sensors_msgs.msg import CustomPressureTemperature
+from adafruit_extended_bus import ExtendedI2C as I2C
 #from geometry_msgs.msg import PointStamped
 import board
 import busio
@@ -30,8 +31,18 @@ class rtf_PT(Node):
     def __init__(self, name, i2c=None):
         super().__init__(name)
 
+        self.i2c_bus = self.declare_parameter('i2c_bus', '1').value
+
+        if self.i2c_bus == '1':
+            custom_scl = board.SCL
+            custom_sda = board.SDA
+        elif self.i2c_bus == '0':
+            i2c = I2C(0)
+        else:
+            return
+
         if i2c is None:
-            self.i2c = busio.I2C(board.SCL, board.SDA)
+            self.i2c = busio.I2C(scl=custom_scl, sda=custom_sda)
         else:
             self.i2c = i2c
 
@@ -42,7 +53,6 @@ class rtf_PT(Node):
         self.timer = self.create_timer(rate, self.callback)
 
         self.pub_pressure_temp = self.create_publisher(CustomPressureTemperature, 'data', 10)
-        #self.pub_altitude = self.create_publisher(PointStamped, 'altitude', 10)
 
         self.frame_id = self.declare_parameter('frame_id', "dps310").value
         self.i2c_address = self.declare_parameter('i2c_address', "0x77").value
@@ -87,14 +97,6 @@ class rtf_PT(Node):
         self.pressure_temp_msg.temperature = t # C
         
         self.pub_pressure_temp.publish(self.pressure_temp_msg)
-
-        #msg = PointStamped()
-        #msg.header.stamp = self.get_clock().now().to_msg()
-        #msg.header.frame_id = self.frame_id
-        #msg.point.x = 0.0
-        #msg.point.y = 0.0
-        #msg.point.z = 44330. * (1. - (p/p0)**(1./5.255) )
-        #self.pub_altitude.publish(msg)
 
 
 class rtf_dps310(rtf_PT):
