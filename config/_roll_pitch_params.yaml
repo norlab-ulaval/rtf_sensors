@@ -1,0 +1,5 @@
+plane_orientation_node:
+  ros__parameters:
+    d_ab: 0.5
+    d_ac: 0.6
+    d_bc: 0.5

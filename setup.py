@@ -46,6 +46,7 @@ setup(
             'dps310_node = rtf_sensors.nodes.sensor_nodes:rtf_dps310_node',
             'lis3mdl_node = rtf_sensors.nodes.sensor_nodes:rtf_lis3mdl_node',
             'multi_pt_node = rtf_sensors.nodes.sensor_nodes:rtf_multi_pt_node',
+            'plane_orientation_node = rtf_sensors.roll_pitch_computation:main',
         ],
     },
 )
